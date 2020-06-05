@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - openjdk14
+addons:
+  sonarcloud:
+    organization: lexie93
+    token: $SONAR_TOKEN
+script:
+  - mvn clean verify install sonar:sonar -Pcoverage -Dsonar.projectKey=Lexie93_bookkeeper -Dsonar.language=java -Dsonar.java.binaries=.
+

@@ -37,9 +37,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:https://github.com/apache/bookkeeper.git</connection>
-    <developerConnection>scm:git:https://github.com/apache/bookkeeper.git</developerConnection>
-    <url>https://github.com/apache/bookkeeper</url>
+    <connection>scm:git:https://github.com/Lexie93/bookkeeper.git</connection>
+    <developerConnection>scm:git:https://github.com/Lexie93/bookkeeper.git</developerConnection>
+    <url>https://github.com/Lexie93/bookkeeper</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
