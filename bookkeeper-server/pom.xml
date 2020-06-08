@@ -220,6 +220,9 @@
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <properties>
+
+	  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../${aggregate.report.dir}</sonar.coverage.jacoco.xmlReportPaths>
+
             <property>
               <name>listener</name>
               <value>org.apache.bookkeeper.common.testing.util.TimedOutTestsListener</value>
@@ -305,6 +308,28 @@
             <configuration>
               <skipTests>true</skipTests>
             </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>coverage</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
