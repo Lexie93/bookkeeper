@@ -116,7 +116,10 @@
   </developers>
   <properties>
 
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <aggregate.report.dir>tests/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
+
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -1177,18 +1180,6 @@
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
-		<configuration>
-                	<destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-		</configuration>
-              </execution>
-		<execution>
-                <id>report</id>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-		<configuration>
-			<dataFile>./tests/target/site/jacoco-aggregate/jacoco.xml</dataFile>
-		</configuration>
               </execution>
             </executions>
           </plugin>
