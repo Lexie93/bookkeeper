@@ -166,4 +166,31 @@ public class ValueTest {
 		Assert.assertTrue(val1.equals(val2));
 	}
 	
+	@Test
+	public void testProjectTotal() {
+		//ALL_FIELDS is initially set to null, we can exploit this to cover the first condition
+		Value val1 = new Value();
+		val1.setField("firstField", "firstValue".getBytes());
+		val1.setField("secondField", "secondValue".getBytes());
+		Value val2 = val1.project(null);
+		Assert.assertEquals(val1, val2);
+	}
+	
+	@Test
+	public void testProjectPartial() {
+		Value val1 = new Value();
+		val1.setField("firstField", "firstValue".getBytes());
+		val1.setField("secondField", "secondValue".getBytes());
+		val1.setField("thirdField", "thirdValue".getBytes());
+		val1.setField("lastField", "lastValue".getBytes());
+		Set<String> set = new LinkedHashSet<String>();
+		set.add("secondField");
+		set.add("lastField");
+		Value val2 = val1.project(set);
+		boolean cond1 = val2.getFields().size()==2;
+		boolean cond2 = val2.getFields().contains("secondField");
+		boolean cond3 = val2.getFields().contains("lastField");
+		Assert.assertTrue(cond1 && cond2 && cond3);
+	}
+	
 }
