@@ -135,6 +135,15 @@ public class ValueTest {
 		Assert.assertFalse(val1.equals(val2));
 	}
 	
+	@Test
+	public void testEqualsNotSameEntries3() {
+		Value val1 = new Value();
+		Value val2 = new Value();
+		val1.setField("sameField", "value".getBytes());
+		val2.setField("sameField", "differentValue".getBytes());
+		Assert.assertFalse(val1.equals(val2));
+	}
+	
 	@Ignore
 	@Test
 	public void testEqualsTrue1() {
