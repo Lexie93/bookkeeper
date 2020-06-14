@@ -180,6 +180,12 @@
 
 <plugins>
 
+		<plugin>
+        		<groupId>org.pitest</groupId>
+		        <artifactId>pitest-maven</artifactId>
+		        <version>1.5.1</version>
+		</plugin>
+
 <!--
 <plugin>
     <groupId>org.jacoco</groupId>

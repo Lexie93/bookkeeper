@@ -26,8 +26,34 @@
   </dependencies>
 
 
+<!--
   <build>
-    <plugins>
+	<plugins>
+	<plugin>
+        	<groupId>org.pitest</groupId>
+	        <artifactId>pitest-maven</artifactId>
+	        <version>1.5.1</version>
+		<executions>
+			<execution>
+				<id>pitest-execution</id>
+				<phase>prepare-package</phase>
+				<goals>
+					<goal>mutationCoverage</goal>
+				</goals>
+				<configuration>
+					<targetClasses>
+						<param>org.apache.bookkeeper.metastore.Value</param>
+					</targetClasses>
+		
+					<targetTests>
+						<param>org.apache.bookkeeper.*</param>
+					</targetTests>
+		
+				</configuration>
+			</execution>
+		</executions>
+	</plugin>
+
 
 	<plugin>
         <groupId>org.jacoco</groupId>
@@ -51,6 +77,6 @@
 
     </plugins>
   </build>
-
+-->
 
 </project>

@@ -220,6 +220,26 @@
   <dependencyManagement>
     <dependencies>
       <!-- provided dependencies -->
+
+
+	<dependency>
+		<groupId>org.pitest</groupId>
+		<artifactId>pitest-maven</artifactId>
+		<version>1.5.1</version>
+		<type>maven-plugin</type>	
+	</dependency>
+
+
+<!--
+	<dependency>
+	  <groupId>br.usp.each.saeg</groupId>
+	  <artifactId>ba-dua</artifactId>
+	  <version>0.4.0</version>
+	  <type>pom</type>
+	</dependency>
+-->
+
+
       <dependency>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-annotations</artifactId>
@@ -839,6 +859,40 @@
         	<groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-surefire-plugin</artifactId>
 	        <version>${maven-surefire-plugin.version}</version>
+<!--
+		<configuration>
+			<argline>
+				-javaagent:/home/lex/Scrivania/ISW2/DeAngelis/ba-dua/lib/ba-dua-agent-rt-0.4.0-all.jar
+				-Xbootclasspath/p:/home/lex/Scrivania/ISW2/DeAngelis/ba-dua/lib/ba-dua-agent-rt-0.4.0-all.jar
+			</argline>
+		</configuration>
+-->
+	</plugin>
+
+
+	<plugin>
+        	<groupId>org.pitest</groupId>
+	        <artifactId>pitest-maven</artifactId>
+	        <version>1.5.1</version>
+		<executions>
+			<execution>
+				<id>pitest-execution</id>
+				<phase>verify</phase>
+				<goals>
+					<goal>mutationCoverage</goal>
+				</goals>
+				<configuration>
+					<targetClasses>
+						<param>org.apache.bookkeeper.metastore.Value</param>
+					</targetClasses>
+		
+					<targetTests>
+						<param>org.apache.bookkeeper.*</param>
+					</targetTests>
+		
+				</configuration>
+			</execution>
+		</executions>
 	</plugin>
 
 
@@ -855,7 +909,7 @@
             </dependency>
           </dependencies>
           <configuration>
-            <configLocation>buildtools/src/main/resources/bookkeeper/checkstyle.xml</configLocation>
+            <configLocation>buildbuildtools/src/main/resources/bookkeeper/checkstyle.xml</configLocation>
             <suppressionsLocation>buildtools/src/main/resources/bookkeeper/suppressions.xml</suppressionsLocation>
             <encoding>UTF-8</encoding>
             <consoleOutput>true</consoleOutput>
