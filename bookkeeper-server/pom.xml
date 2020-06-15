@@ -179,12 +179,31 @@
   <build>
 
 <plugins>
-<!--
+
 		<plugin>
         		<groupId>org.pitest</groupId>
 		        <artifactId>pitest-maven</artifactId>
 		        <version>1.5.1</version>
-		</plugin>-->
+			<executions>
+				<execution>
+					<phase>verify</phase>
+					<id>run-mutation-tests</id>
+					<goals>
+						<goal>mutationCoverage</goal>
+					</goals>
+					<configuration>
+						<exportLineCoverage>true</exportLineCoverage>
+						<outputFormats><value>XML</value></outputFormats>
+						<targetClasses>
+							<param>org.apache.bookkeeper.metastore.Value</param>
+						</targetClasses>
+						<targetTests>
+							<param>org.apache.bookkeeper.*</param>
+						</targetTests>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
 
 <!--
 <plugin>
