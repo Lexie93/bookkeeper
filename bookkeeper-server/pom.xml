@@ -179,12 +179,12 @@
   <build>
 
 <plugins>
-
+<!--
 		<plugin>
         		<groupId>org.pitest</groupId>
 		        <artifactId>pitest-maven</artifactId>
 		        <version>1.5.1</version>
-		</plugin>
+		</plugin>-->
 
 <!--
 <plugin>
@@ -261,11 +261,12 @@
         <artifactId>spotbugs-maven-plugin</artifactId>
       </plugin>
 
-<!--
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
+<!--
         <configuration>
           <properties>
             <property>
@@ -274,8 +275,9 @@
             </property>
           </properties>
         </configuration>
-      </plugin>
 -->
+      </plugin>
+
 <!--
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -350,6 +352,7 @@
       </build>
     </profile>
     <!-- test profiles -->
+
     <profile>
       <id>skipBookKeeperServerTests</id>
       <activation>
@@ -369,5 +372,6 @@
         </plugins>
       </build>
     </profile>
+
   </profiles>
 </project>

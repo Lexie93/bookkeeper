@@ -26,9 +26,11 @@
   </dependencies>
 
 
-<!--
+
   <build>
 	<plugins>
+
+<!--
 	<plugin>
         	<groupId>org.pitest</groupId>
 	        <artifactId>pitest-maven</artifactId>
@@ -53,30 +55,29 @@
 			</execution>
 		</executions>
 	</plugin>
-
+-->
 
 	<plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.4</version>
         <executions>
-          <execution>
-            <id>report</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>report-aggregate</goal>
-            </goals>
-	    <configuration>
-		<includes>
-			<include>org/apache/bookkeeper/metastore/Value.class</include>
-		</includes>
-	    </configuration>
-          </execution>
-        </executions>
-      </plugin>
+		<execution>
+			<id>report</id>
+			<phase>verify</phase>
+			<goals>
+				<goal>report-aggregate</goal>
+			</goals>
+			<configuration>
+				<includes>
+					<include>org/apache/bookkeeper/metastore/Value.class</include>
+				</includes>
+			</configuration>
+		</execution>
+	</executions>
+	</plugin>
 
     </plugins>
   </build>
--->
+
 
 </project>
