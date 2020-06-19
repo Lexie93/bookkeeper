@@ -9,14 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
-
-//import static org.junit.Assert.assertEquals;
-
-import java.util.AbstractMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.bookkeeper.metastore.Value;
@@ -26,44 +20,32 @@ public class ValueTest {
 	
 	private final String[] fields = new String[] {"firstField", "secondField", "nullValueField", null, "anotherField"};
 	private final String[] values = new String[] {"bytesFirstField", "bytesSecondField", null, "nullFieldValue", "anotherBytesField"};
-	
-	
-	@InjectMocks
-	Value value = new Value();
-	
-	@Mock
-	Map<String, byte[]> mockedField;
+	private Value value;
 
 	@Before
-	public void setup(){
-
-		Mockito.when(mockedField.entrySet()).thenAnswer((Answer<Set<Entry<String, byte[]>>>) invocation -> {
-			LinkedHashSet<Entry<String, byte[]>> set = new LinkedHashSet<>();
-			byte[] temp;
-			for(int i=0; i<fields.length; i++) {
-				if (values[i] != null)
-					temp = values[i].getBytes();
-				else
-					temp = null;
-				set.add(new AbstractMap.SimpleEntry<>(fields[i], temp));
-			}
-			return set;
-		});
-		Mockito.lenient().when(mockedField.size()).thenReturn(fields.length);
+	public void setUp(){
+		value = new Value();
+		for(int i=0; i<fields.length; i++) {
+			value.setField(fields[i], values[i]==null ? null : values[i].getBytes());
+		}
 	}
+
+	@InjectMocks
+	Value v = new Value();
+
+	@Mock
+	Map<String, byte[]> mockedField;
 	
 	@Test
 	public void testMerge(){
 		boolean condition = true;
 		Value val = new Value();
+		Assert.assertEquals(value.getFields(), value.merge(val).getFields());
+
 		for(int i=0; i<fields.length; i++) {
-			if (values[i] != null)
-				val.setField(fields[i], values[i].getBytes());
-			else
-				val.setField(fields[i], null);
+			val.setField(fields[i], values[i] == null ? null : values[i].getBytes());
 		}
-		
-		value.merge(val);
+		v.merge(val);
 
 		for(int i=0; i<fields.length; i++) {
 			try {
@@ -81,8 +63,11 @@ public class ValueTest {
 	
 	@Test
 	public void testToString() {
-		String str = "[('firstField'=bytesFirstField)('secondField'=bytesSecondField)('nullValueField'=NONE)('NULL'=nullFieldValue)('anotherField'=anotherBytesField)]";
-		Assert.assertEquals(value.toString(), str);
+		String output = value.toString();
+		Assert.assertTrue(output.startsWith("[") && output.endsWith("]"));
+		String[] str = {"('firstField'=bytesFirstField)", "('secondField'=bytesSecondField)", "('nullValueField'=NONE)", "('NULL'=nullFieldValue)", "('anotherField'=anotherBytesField)"};
+		for (String s : str)
+			Assert.assertTrue(output.contains(s));
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -98,8 +83,6 @@ public class ValueTest {
 		Value val = new Value();
 		val.setField("field", "value".getBytes());
 		
-		Mockito.when(mockedField.size()).thenReturn(2);
-		
 		boolean cond2 = value.equals(val);
 		Assert.assertTrue(!cond1 && !cond2);
 	}
@@ -109,11 +92,8 @@ public class ValueTest {
 	public void testEqualsNotSameEntries1() {
 		Value val = new Value();
 		for(int i=0; i<fields.length-1; i++) {
-			if (values[i] != null)
-				val.setField(fields[i], values[i].getBytes());
-			else
-				val.setField(fields[i], null);		
-			}
+			val.setField(fields[i], values[i]==null ? null : values[i].getBytes());
+		}
 		val.setField("differentField", "differentBytes".getBytes());
 		Assert.assertFalse(value.equals(val));
 	}
@@ -161,10 +141,7 @@ public class ValueTest {
 	public void testEqualsTrue1() {
 		Value val = new Value();
 		for(int i=0; i<fields.length; i++) {
-			if (values[i] != null)
-				val.setField(fields[i], values[i].getBytes());
-			else
-				val.setField(fields[i], null);
+			val.setField(fields[i], values[i]==null ? null : values[i].getBytes());
 		}
 		Assert.assertTrue(value.equals(val));
 	}
