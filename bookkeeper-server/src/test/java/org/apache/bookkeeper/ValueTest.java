@@ -166,7 +166,11 @@ public class ValueTest {
 		val1.setField("firstField", "firstValue".getBytes());
 		val1.setField("secondField", "secondValue".getBytes());
 		Value val2 = val1.project(null);
-		Assert.assertEquals(val1, val2);
+		Assert.assertEquals(val1.getFields().size(), val2.getFields().size());
+		for (String entry : val1.getFields()){
+			byte[] tmp = val2.getField(entry);
+			Assert.assertEquals(tmp, val1.getField(entry));
+		}
 	}
 	
 	@Test
