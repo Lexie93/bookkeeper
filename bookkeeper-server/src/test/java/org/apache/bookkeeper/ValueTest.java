@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
@@ -25,8 +24,8 @@ import org.apache.bookkeeper.metastore.Value;
 @RunWith(MockitoJUnitRunner.class)
 public class ValueTest {
 	
-	private String[] fields = new String[] {"firstField", "secondField", "nullValueField", null, "anotherField"};
-	private String[] values = new String[] {"bytesFirstField", "bytesSecondField", null, "nullFieldValue", "anotherBytesField"};
+	private final String[] fields = new String[] {"firstField", "secondField", "nullValueField", null, "anotherField"};
+	private final String[] values = new String[] {"bytesFirstField", "bytesSecondField", null, "nullFieldValue", "anotherBytesField"};
 	
 	
 	@InjectMocks
@@ -38,20 +37,17 @@ public class ValueTest {
 	@Before
 	public void setup(){
 
-		Mockito.when(mockedField.entrySet()).thenAnswer(new Answer<Set<Map.Entry<String, byte[]>>>(){
-			@Override
-			public Set<Entry<String, byte[]>> answer(InvocationOnMock invocation) throws Throwable {
-				Set<Entry<String, byte[]>> set = new LinkedHashSet<Entry<String, byte[]>>();
-				byte[] temp;
-				for(int i=0; i<fields.length; i++) {
-					if (values[i] != null)
-						temp = values[i].getBytes();
-					else
-						temp = null;
-					set.add(new AbstractMap.SimpleEntry<String, byte[]>(fields[i], temp));
-				}
-				return set;
+		Mockito.when(mockedField.entrySet()).thenAnswer((Answer<Set<Entry<String, byte[]>>>) invocation -> {
+			LinkedHashSet<Entry<String, byte[]>> set = new LinkedHashSet<>();
+			byte[] temp;
+			for(int i=0; i<fields.length; i++) {
+				if (values[i] != null)
+					temp = values[i].getBytes();
+				else
+					temp = null;
+				set.add(new AbstractMap.SimpleEntry<>(fields[i], temp));
 			}
+			return set;
 		});
 		Mockito.lenient().when(mockedField.size()).thenReturn(fields.length);
 	}
@@ -85,11 +81,7 @@ public class ValueTest {
 	
 	@Test
 	public void testToString() {
-		String str = "[";
-		for(int i=0; i<fields.length; i++) {
-			str += "('" + (fields[i]==null ? "NULL" : fields[i]) + "'=" + (values[i]==null ? "NONE" : values[i]) + ")";
-		}
-		str += "]";
+		String str = "[('firstField'=bytesFirstField)('secondField'=bytesSecondField)('nullValueField'=NONE)('NULL'=nullFieldValue)('anotherField'=anotherBytesField)]";
 		Assert.assertEquals(value.toString(), str);
 	}
 	
@@ -184,7 +176,7 @@ public class ValueTest {
 		val1.setField("secondField", "secondValue".getBytes());
 		val1.setField("thirdField", "thirdValue".getBytes());
 		val1.setField("lastField", "lastValue".getBytes());
-		Set<String> set = new LinkedHashSet<String>();
+		Set<String> set = new LinkedHashSet<>();
 		set.add("secondField");
 		set.add("lastField");
 		Value val2 = val1.project(set);
