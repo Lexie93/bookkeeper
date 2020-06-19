@@ -64,7 +64,7 @@ public class ValueTest {
 		}
 		
 		value.merge(val);
-		
+
 		for(int i=0; i<fields.length; i++) {
 			try {
 				if (values[i]!=null)
@@ -87,7 +87,7 @@ public class ValueTest {
 	
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
-	public void testEqualsNotSameInstance() {
+	public void testEqualsNotSameType() {
 		String obj = "wrongType";
 		Assert.assertFalse(value.equals(obj));
 	}
@@ -127,14 +127,33 @@ public class ValueTest {
 		val2.setField("differentField", "differentValue".getBytes());
 		Assert.assertFalse(val1.equals(val2));
 	}
+
+	@Test
+	public void testHashCodesNotSameEntries() {
+		Value val1 = new Value();
+		Value val2 = new Value();
+		val1.setField("field", "value".getBytes());
+		val2.setField("differentField", "differentValue".getBytes());
+		Assert.assertNotEquals(val1.hashCode(), val2.hashCode());
+	}
 	
 	@Test
-	public void testEqualsNotSameEntries3() {
+	public void testEqualsNotSameValues() {
 		Value val1 = new Value();
 		Value val2 = new Value();
 		val1.setField("sameField", "value".getBytes());
 		val2.setField("sameField", "differentValue".getBytes());
 		Assert.assertFalse(val1.equals(val2));
+	}
+
+	@Ignore
+	@Test
+	public void testHashCodesNotSameValues() {
+		Value val1 = new Value();
+		Value val2 = new Value();
+		val1.setField("sameField", "value".getBytes());
+		val2.setField("sameField", "differentValue".getBytes());
+		Assert.assertNotEquals(val1.hashCode(), val2.hashCode());
 	}
 	
 	@Ignore
@@ -157,6 +176,7 @@ public class ValueTest {
 		val1.setField("sameField", "sameValue".getBytes());
 		val2.setField("sameField", "sameValue".getBytes());
 		Assert.assertTrue(val1.equals(val2));
+		Assert.assertEquals(val1.hashCode(), val2.hashCode());
 	}
 	
 	@Test
