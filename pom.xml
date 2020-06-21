@@ -1037,16 +1037,17 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
+        <artifactId>maven-fire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
 <!--
-          <argLine>-Xmx2G -Djava.net.preferIPv4Stack=true -Dio.netty.leakDetection.level=paranoid</argLine>
-          <redirectTestOutputToFile>${redirectTestOutputToFile}</redirectTestOutputToFile>
+            <argLine>-javaagent:${basedir}/../ba-dua/ba-dua-agent-rt-0.4.0-all.jar -Xbootclasspath/p:${basedir}/../ba-dua/ba-dua-agent-rt-0.4.0-all.jar -Dfile.encoding=${project.build.sourceEncoding} ${argLine} -Xmx2G -Djava.net.preferIPv4Stack=true -Dio.netty.leakDetection.level=paranoid</argLine>
+ -->
+<!--      <redirectTestOutputToFile>${redirectTestOutputToFile}</redirectTestOutputToFile>
 -->
 	  <forkCount>${forkCount.variable}</forkCount>
           <reuseForks>false</reuseForks>
-          <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
+          <!--<forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>-->
           <rerunFailingTestsCount>${testRetryCount}</rerunFailingTestsCount>
         </configuration>
       </plugin>
@@ -1210,6 +1211,9 @@
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
+		<configuration>
+              <destFile>${sonar.jacoco.reportPath}</destFile>
+              </configuration>
               </execution>
             </executions>
           </plugin>
