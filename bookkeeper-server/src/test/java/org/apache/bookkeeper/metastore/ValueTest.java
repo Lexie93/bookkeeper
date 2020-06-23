@@ -1,4 +1,4 @@
-package org.apache.bookkeeper;
+package org.apache.bookkeeper.metastore;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.bookkeeper.metastore.Value;
+import static org.apache.bookkeeper.metastore.MetastoreTable.ALL_FIELDS;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ValueTest {
@@ -63,6 +63,8 @@ public class ValueTest {
 	
 	@Test
 	public void testToString() {
+		Value val = new Value();
+		Assert.assertEquals("[]", val.toString());
 		String output = value.toString();
 		Assert.assertTrue(output.startsWith("[") && output.endsWith("]"));
 		String[] str = {"('firstField'=bytesFirstField)", "('secondField'=bytesSecondField)", "('nullValueField'=NONE)", "('NULL'=nullFieldValue)", "('anotherField'=anotherBytesField)"};
@@ -158,11 +160,10 @@ public class ValueTest {
 	
 	@Test
 	public void testProjectTotal() {
-		//ALL_FIELDS is initially set to null, we can exploit this to cover the first condition
 		Value val1 = new Value();
 		val1.setField("firstField", "firstValue".getBytes());
 		val1.setField("secondField", "secondValue".getBytes());
-		Value val2 = val1.project(null);
+		Value val2 = val1.project(ALL_FIELDS);
 		Assert.assertEquals(val1.getFields().size(), val2.getFields().size());
 		for (String entry : val1.getFields()){
 			byte[] tmp = val2.getField(entry);
