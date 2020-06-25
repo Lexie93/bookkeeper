@@ -70,7 +70,8 @@
 			<configuration>
 				<includes>
 					<include>org/apache/bookkeeper/metastore/Value.class</include>
-					<include>org/apache/bookkeeper/client/RoundRobinDistributionSchedule*.class</include>
+					<include>org/apache/bookkeeper/client/RoundRobinDistributionSchedule.class</include>
+					<include>org/apache/bookkeeper/client/RoundRobinDistributionSchedule$WriteSetImpl*.class</include>				
 				</includes>
 			</configuration>
 		</execution>
