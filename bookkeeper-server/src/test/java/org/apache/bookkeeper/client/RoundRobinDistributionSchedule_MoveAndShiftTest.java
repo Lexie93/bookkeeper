@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class RoundRobinDistributionScheduleTest {
+public class RoundRobinDistributionSchedule_MoveAndShiftTest {
 
     private final DistributionSchedule.WriteSet writeSet;
     private final Integer[] positions;
@@ -31,7 +31,7 @@ public class RoundRobinDistributionScheduleTest {
         });
     }
 
-    public RoundRobinDistributionScheduleTest(Integer[] caller, Integer[] positions, Integer[] result){
+    public RoundRobinDistributionSchedule_MoveAndShiftTest(Integer[] caller, Integer[] positions, Integer[] result){
         this.writeSet = RoundRobinDistributionSchedule.writeSetFromValues(caller);
         this.positions = positions;
         this.result = result;
