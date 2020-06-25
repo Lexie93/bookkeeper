@@ -196,7 +196,7 @@
 						<outputFormats><value>XML</value></outputFormats>
 						<targetClasses>
 							<param>org.apache.bookkeeper.metastore.Value</param>
-							<param>org.apache.bookkeeper.client.RoundRobinDistributionSchedule</param>
+							<param>org.apache.bookkeeper.client.RoundRobinDistributionSchedule*</param>
 						</targetClasses>
 						<targetTests>
 							<param>org.apache.bookkeeper.metastore.*</param>
