@@ -46,8 +46,10 @@ public class RoundRobinDistributionSchedule_GetEntriesStripedToTheBookieTest {
                 //added to increase cond coverage, but seems useless...
                 //should throw exception (lastId<0)
                 {bIndex[1], startId[2], lastId[0], writeQuorum[0], ackQuorum, ensemble[1], card[0], new Boolean[] {}},
-                //added to increase cond coverage
-                {bIndex[2], startId[1], lastId[3], writeQuorum[1], ackQuorum, ensemble[2], card[2], new Boolean[] {true, true, true, false}}
+                //added to increase condition coverage
+                {bIndex[2], startId[1], lastId[3], writeQuorum[1], ackQuorum, ensemble[2], card[2], new Boolean[] {true, true, true, false}},
+                //added to increase mutation coverage, kills 2 mutants
+                {bIndex[1], startId[2], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[1], new Boolean[] {false, true, true}}
         });
     }
 
