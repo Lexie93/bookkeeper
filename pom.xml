@@ -1037,7 +1037,7 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-fire-plugin</artifactId>
+        <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
 <!--
@@ -1048,6 +1048,9 @@
 	  <forkCount>${forkCount.variable}</forkCount>
           <reuseForks>false</reuseForks>
           <!--<forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>-->
+	  <systemPropertyVariables>
+              <log4j.configuration>file:${project.basedir}/log4j-silent.properties</log4j.configuration>
+          </systemPropertyVariables>
           <rerunFailingTestsCount>${testRetryCount}</rerunFailingTestsCount>
         </configuration>
       </plugin>
