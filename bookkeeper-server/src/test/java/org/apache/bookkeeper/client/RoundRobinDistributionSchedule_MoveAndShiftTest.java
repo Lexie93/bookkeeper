@@ -41,11 +41,12 @@ public class RoundRobinDistributionSchedule_MoveAndShiftTest {
     public void testMoveAndShift(){
         try {
             writeSet.moveAndShift(positions[0], positions[1]);
-            Assert.assertTrue(writeSet.equals(RoundRobinDistributionSchedule.writeSetFromValues(result)));
+            Assert.assertEquals("wrong shift", writeSet, RoundRobinDistributionSchedule.writeSetFromValues(result));
         } catch (ArrayIndexOutOfBoundsException e){
             Assert.fail("variable 'array' is throwing the exception, it should be thrown by checkBounds method");
         } catch (IndexOutOfBoundsException e) {
-            Assert.assertTrue(positions[0] == -1 || positions[1] == 6);
+            //using "positions[1] == 5" even though it will not reach this point
+            Assert.assertTrue("should not throw this exception", positions[0] == -1 || positions[1] == 6 || positions[1] == 5);
         }
     }
 }

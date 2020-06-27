@@ -71,12 +71,12 @@ public class RoundRobinDistributionSchedule_GetEntriesStripedToTheBookieTest {
         RoundRobinDistributionSchedule schedule = new RoundRobinDistributionSchedule(writeQuorumSize, ackQuorumSize, ensembleSize);
         try {
             BitSet entries = schedule.getEntriesStripedToTheBookie(bookieIndex, startEntryId, lastEntryId);
-            Assert.assertEquals(cardinality, entries.cardinality());
+            Assert.assertEquals("wrong number of entries assigned", cardinality, entries.cardinality());
             for (int i = 0; i < entries.length(); i++) {
-                Assert.assertEquals(result[i], entries.get(i));
+                Assert.assertEquals("wrong entries assigned", result[i], entries.get(i));
             }
         } catch (IllegalArgumentException e){
-            Assert.assertTrue(startEntryId==-1L || bookieIndex==-1 || lastEntryId==0 || ensembleSize==0 || lastEntryId==-1L);
+            Assert.assertTrue("should not throw exception",startEntryId==-1L || bookieIndex==-1 || lastEntryId==0 || ensembleSize==0 || lastEntryId==-1L);
         } catch (IndexOutOfBoundsException e){
             Assert.fail("Exception not thrown");
         }
