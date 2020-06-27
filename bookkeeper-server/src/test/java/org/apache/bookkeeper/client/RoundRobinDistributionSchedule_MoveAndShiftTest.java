@@ -17,17 +17,17 @@ public class RoundRobinDistributionSchedule_MoveAndShiftTest {
 
     @Parameters
     public static Collection<Integer[][]> getParameters(){
-        Integer[] caller1 = new Integer[]{-2, -1 ,0 ,1 ,2};
-        Integer[] pos1 = new Integer[]{3, 1};
-        Integer[] pos2 = new Integer[]{1, 3};
-        Integer[] pos3 = new Integer[]{0, 4};
-        Integer[] pos4 = new Integer[]{1, 1};
+        Integer[] caller = new Integer[]{-2, -1 ,0 ,1 ,2};
+        Integer[][] pos = new Integer[][]{{3, 1}, {1, 3}, {0, 4}, {1, 1}, {-1, 3}, {5, 0}, {0, 6}};
 
         return Arrays.asList(new Integer[][][]{
-                {caller1, pos1, new Integer[]{-2, 1, -1, 0, 2}},
-                {caller1, pos2, new Integer[]{-2, 0, 1, -1, 2}},
-                {caller1, pos3, new Integer[]{-1, 0, 1, 2, -2}},
-                {caller1, pos4, new Integer[]{-2, -1, 0, 1, 2}}
+                {caller, pos[0], new Integer[]{-2, 1, -1, 0, 2}},
+                {caller, pos[1], new Integer[]{-2, 0, 1, -1, 2}},
+                {caller, pos[2], new Integer[]{-1, 0, 1, 2, -2}},
+                {caller, pos[3], new Integer[]{-2, -1, 0, 1, 2}},
+                {caller, pos[4], new Integer[]{0,0,0,0,0}},
+                //{caller, pos[5], new Integer[]{0,0,0,0,0}},           this should be fixed
+                {caller, pos[6], new Integer[]{0,0,0,0,0}}
         });
     }
 
@@ -39,7 +39,13 @@ public class RoundRobinDistributionSchedule_MoveAndShiftTest {
 
     @Test
     public void testMoveAndShift(){
-        writeSet.moveAndShift(positions[0], positions[1]);
-        Assert.assertEquals(writeSet, RoundRobinDistributionSchedule.writeSetFromValues(result));
+        try {
+            writeSet.moveAndShift(positions[0], positions[1]);
+            Assert.assertTrue(writeSet.equals(RoundRobinDistributionSchedule.writeSetFromValues(result)));
+        } catch (ArrayIndexOutOfBoundsException e){
+            Assert.fail("variable 'array' is throwing the exception, it should be thrown by checkBounds method");
+        } catch (IndexOutOfBoundsException e) {
+            Assert.assertTrue(positions[0] == -1 || positions[1] == 6);
+        }
     }
 }
