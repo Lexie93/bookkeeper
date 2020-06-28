@@ -29,27 +29,29 @@ public class RoundRobinDistributionSchedule_GetEntriesStripedToTheBookieTest {
         Integer[] writeQuorum = {2, 3};
         int ackQuorum = 3;
         Integer[] ensemble = {0, 3, 4};
-        Integer[] card = {0, 2, 3};
+        Integer[] card = {0, 1, 2, 3};
 
         return Arrays.asList(new Object[][]{
-                {bIndex[1], startId[1], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[2], new Boolean[] {true, false, true, true}},
-                {bIndex[2], startId[1], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[1], new Boolean[] {false, true, true, false}},
+                {bIndex[1], startId[1], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[3], new Boolean[] {true, false, true, true}},
+                {bIndex[2], startId[1], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[2], new Boolean[] {false, true, true, false}},
                 {bIndex[1], startId[2], lastId[2], writeQuorum[0], ackQuorum, ensemble[1], card[0], new Boolean[] {false}},
                 //should throw exception (startId<0)
-                {bIndex[2], startId[0], lastId[1], writeQuorum[0], ackQuorum, ensemble[1], card[2], new Boolean[] {}},
+                {bIndex[2], startId[0], lastId[1], writeQuorum[0], ackQuorum, ensemble[1], card[3], new Boolean[] {}},
                 //should throw exception (bIndex<0)
-                {bIndex[0], startId[1], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[2], new Boolean[] {}},
+                {bIndex[0], startId[1], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[3], new Boolean[] {}},
                 //should throw exception (lastId<startId)
-                {bIndex[1], startId[2], lastId[1], writeQuorum[0], ackQuorum, ensemble[1], card[2], new Boolean[] {}},
+                {bIndex[1], startId[2], lastId[1], writeQuorum[0], ackQuorum, ensemble[1], card[3], new Boolean[] {}},
                 //should throw exception (ensemble<1)
                 {bIndex[1], startId[2], lastId[2], writeQuorum[0], ackQuorum, ensemble[0], card[0], new Boolean[] {}},
                 //added to increase condition coverage, but seems useless...
                 //should throw exception (lastId<0)
                 {bIndex[1], startId[2], lastId[0], writeQuorum[0], ackQuorum, ensemble[1], card[0], new Boolean[] {}},
                 //added to increase condition coverage
-                {bIndex[2], startId[1], lastId[3], writeQuorum[1], ackQuorum, ensemble[2], card[2], new Boolean[] {true, true, true, false}},
+                {bIndex[2], startId[1], lastId[3], writeQuorum[1], ackQuorum, ensemble[2], card[3], new Boolean[] {true, true, true, false}},
                 //added to increase mutation coverage, kills 2 mutants
-                {bIndex[1], startId[2], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[1], new Boolean[] {false, true, true}}
+                {bIndex[1], startId[2], lastId[3], writeQuorum[0], ackQuorum, ensemble[1], card[2], new Boolean[] {false, true, true}},
+                //added to increase coverage based on data-flow
+                {bIndex[1], startId[2], lastId[2], writeQuorum[1], ackQuorum, ensemble[1], card[1], new Boolean[] {true}}
         });
     }
 
