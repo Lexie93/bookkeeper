@@ -1,0 +1,6 @@
+BookKeeper
+1) In bookkeeper-server	- org.apache.bookkeeper.client.RoundRobinDistributionSchedule
+2) In bookkeeper-server	- org.apache.bookkeeper.metastore.Value
+Syncope
+3) In syncope-common-idrepo-lib	- org.apache.syncope.common.lib.search.SyncopeFiqlParser
+4) In syncope-core-spring	- org.apache.syncope.core.spring.security.Encryptor
